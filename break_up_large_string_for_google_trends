@@ -1,0 +1,40 @@
+def shift_string(string, start, end):
+  return string[start:end]
+
+def get_length_of_string(string):
+  lengths = []
+  for i in range(0,105,5):
+    lengths.append(int(len(string)*(float(i)/100)))
+  return lengths
+
+def chunks(l, n):
+    n = max(1, n)
+    return (l[i:i+n] for i in range(0, len(l), n))
+  
+def duplicate_string_length(list_length):
+  list_length = [x for pair in zip(list_length,list_length) for x in pair]
+  list_length= list_length[1:]
+  list_length= list_length[:-1]
+  list_length.sort()
+  return list_length
+    
+  
+def break_and_translate(pairs, string):
+  string_parts = []
+  for i in str_len_pairs:
+    start= "".join(str(i).split(',')[0])
+    end = "".join(str(i).split(',')[1])
+    start = int(start[1:])
+    end = int(end[:-1])
+    to_translate = shift_string(string,start, end)
+    translation = translate_client.translate(to_translate,target_language='en')['translatedText']
+    string_parts.append(translation)
+  return string_parts
+
+
+def handle_bad_request(item):
+  string_length = get_length_of_string(item)
+  duplicated_string_length = duplicate_string_length(string_length)
+  str_len_pairs = list(chunks(duplicated_string_length,2))
+  translated_text= break_and_translate(str_len_pairs,item )
+  return translated_text
